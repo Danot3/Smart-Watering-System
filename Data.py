@@ -1,3 +1,4 @@
+import serial
 class DataController:
   
   def __init__(self):  
@@ -12,7 +13,7 @@ class DataController:
         if i <= 100:
           if i >= 0:
             Threshold = i
-            print('Threshold Test:')
+            #print('Threshold Test:')
             return True
              
         else: 
@@ -35,16 +36,46 @@ class DataController:
   #checks if raining or not            
   def isRaining(self,i):
     if i <= 100:
-      if i >= 0:
+      if i >= 50:
         Raining = i
-        print('If raining:')
         return True
          
     else: 
       return False  
-
-                    
-
-
     
+  def isDry(self,i):
+      if i <= 100:
+        if i <= self.Threshold:
+          Moisture = i
+          return True
+           
+      else: 
+        return False
+        
+d1 = DataController()
+d1.setThreshold(15)
+ser = serial.Serial('COM5', 9600)                    
+
+while 1 :
+    str = ser.readline()
+    str = str.decode("utf-8")
+    soil, rain = str.split(":")
+    print(soil)
+    print(rain)
+    soil = float(soil)
+    rain = float(rain)
     
+    if d1.isRaining(rain):
+      #send udp message
+      print("raining")
+    elif not d1.isRaining(rain):
+      #send opposite message
+      print("not raining")
+    
+    if d1.isDry(soil):
+      #send udp message
+      #define isdry
+      print("soil is dry af")
+    elif not d1.isDry(soil):
+      #send close message
+      print("soil is moist")
