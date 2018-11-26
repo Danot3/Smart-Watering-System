@@ -1,12 +1,12 @@
-#import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 import time
 
 class Motor:
     def __init__ (self, status):
         self.status = status
         self.timeOpened = time.time()
-        #GPIO.setmode(GPIO.BOARD)
-        #GPIO.setup(11,GPIO.OUT)
+        GPIO.setmode(GPIO.BOARD)
+        GPIO.setup(11,GPIO.OUT)
         
     #time since valve was opened
     def getTimeSinceOpen(self):
@@ -14,7 +14,7 @@ class Motor:
 
     #opens the valve for the solenoid 
     def OpenValve(self):
-        #GPIO.output(11,GPIO.HIGH)
+        GPIO.output(11,GPIO.HIGH)
         self.status = 1
         print("Valve Opened")
         self.timeOpened = time.time()
@@ -22,7 +22,7 @@ class Motor:
     
     # Closes the valve for the solenoid 
     def CloseValve(self):
-        #GPIO.output(11,GPIO.LOW)
+        GPIO.output(11,GPIO.LOW)
         self.status = 0
         x = str(self.getTimeSinceOpen())
         print("Valve Closed, open for " + x + " seconds")
