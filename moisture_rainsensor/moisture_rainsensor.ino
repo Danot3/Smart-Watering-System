@@ -28,7 +28,7 @@ void setup() {
 
    //Serial.println("Reading From the Sensor ...");
 
-   delay(2000);
+   delay(500);
 
    }
 
