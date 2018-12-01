@@ -1,10 +1,11 @@
 import socket, sys, time
 
-textport = sys.argv[1]
+#textport = sys.argv[1]
 
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-port = int(textport)
-server_address = ('localhost', port)
+port = 2004
+server_address = ('10.0.0.21', port)
+pi2address = '10.0.0.22', port
 s.bind(server_address)
 
 
@@ -53,19 +54,19 @@ while True:
     print ("Received %s bytes from %s: %s" % (len(packet), address, packet))
     
     if packet == "MoistureLimPassed":
-        sendCloseValveInstruction(address)
+        sendCloseValveInstruction(pi2address)
         
     elif packet == "RainLimPassed":
-        sendCloseValveInstruction(address)
+        sendCloseValveInstruction(pi2address)
         
     elif packet == "Testing":
         sendAck(packet, address)      
     
     elif packet == "ManualOpen":
-        sendOpenValveInstruction(address)
+        sendOpenValveInstruction(pi2address)
         
     elif packet == "ManualClose":
-        sendCloseValveInstruction(address)
+        sendCloseValveInstruction(pi2address)
 
     elif "SetRainLim:" in packet:
         sendSetRainLimInstruct(packet, address) 
