@@ -11,6 +11,7 @@ import android.app.Activity;
 
 public class ValveC extends Activity {
     public static final String PARAM = "Param";
+    public static final String PARAM1 = "Param1";
     private Button data;
 
     @Override
@@ -29,5 +30,18 @@ public class ValveC extends Activity {
             }
 
         });
+
+        data = (Button) findViewById(R.id.Adata);
+        data.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ValveC.this, database1.class);
+                i.putExtra(PARAM1, " Displaying sensor data");
+                startActivity(i);
+
+            }
+
+        });
+
     }
 }
